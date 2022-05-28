@@ -26,7 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('movie',[MovieController::class,'index']);
 Route::get('movie/create',[MovieController::class,'create']);
 Route::post('movie/create',[MovieController::class,'store']);
-Route::get('movie/edit',[MovieController::class,'edit']);
+Route::get('movie/edit/{id}',[MovieController::class,'edit']);
 Route::post('movie/edit/{id}',[MovieController::class,'update']);
 Route::post('movie/delete/{id}',[MovieController::class,'delete']);
 Route::get('movie/show/{id}',[MovieController::class,'show']);

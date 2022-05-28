@@ -14,7 +14,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        $movies = movie::all();
+        return view('movie',['movies'=>$movies]);
     }
 
     /**
@@ -24,7 +25,8 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        // ここでapiでmovieInfoを取ってきたい
+        return view('movie.create');
     }
 
     /**
@@ -35,7 +37,17 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = Auth::id();
+        $movieInfo = new movie;
+        $movieInfo->user_id = $id;
+        $movieInfo->movie_title = $request->movie_title;
+        $movieInfo->main_character = $request->main_character;
+        $movieInfo->sub_character = $request->sub_character;
+        $movieInfo->story = $request->story;
+        $movieInfo->impression = $request->impression;
+        $movieInfo->talk_point = $request->talk_point;
+        $movieInfo->save();
+        return redirect('movie.show');
     }
 
     /**
@@ -44,9 +56,10 @@ class MovieController extends Controller
      * @param  \App\Models\movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function show(movie $movie)
+    public function show(movie $movie,$id)
     {
-        //
+        $selectedMovieInfo = movie::where('id',$id)->first();
+        return view('movie.show',['selectedMovieInfo'=>$selectedMovieInfo]);
     }
 
     /**
@@ -55,9 +68,10 @@ class MovieController extends Controller
      * @param  \App\Models\movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function edit(movie $movie)
+    public function edit($id)
     {
-        //
+        $selectedMovieInfo = movie::findOrFail($id);
+        return view('movie.edit',['selectedMovieInfo'=>$selectedMovieInfo]);
     }
 
     /**
@@ -69,7 +83,12 @@ class MovieController extends Controller
      */
     public function update(Request $request, movie $movie)
     {
-        //
+        $movie = movie::findOrFail($id);
+        $movie->story = $request->story;
+        $movie->impression = $request->impression;
+        $movie->talk_point = $request->talk_point;
+        $movie->save();
+        return redirect('movie.show');
     }
 
     /**
@@ -78,8 +97,9 @@ class MovieController extends Controller
      * @param  \App\Models\movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(movie $movie)
+    public function destroy(movie $movie,$id)
     {
-        //
+        movie::fidOrFail($id)->delete();
+        return redirect('movie');
     }
 }
