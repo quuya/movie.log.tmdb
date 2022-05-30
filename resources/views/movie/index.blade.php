@@ -9,22 +9,25 @@
             {{-- ここにmovieHeaderの一覧 --}}
             {{-- @foreach($movies as $movieInfo) --}}
             <div class="card">
-                <div class="table">
+                <table class="table">
                     <tbody>
                         <tr>
                             <th>title</th>
                             <th>content</th>
-                            {{-- <th>{{$movieInfo->title}}</th>
-                            <td>{{$movieInfo->main_character}}</td> --}}
+                            <th></th>
                         </tr>
                         @foreach ($movies as $movie)
                             <tr>
-                                <td>{{$movie->movie_title}}</td>
-                                <td>{{$movie->main_character}}</td>
+                                <th>{{$movie->movie_title}}</th>
+                                <th>{{$movie->main_character}}</th>
+                                <th><form action="/movie/show/{{$movie->id}}" method='get'>
+                                    @csrf
+                                    <input type="submit" value="more"></form>
+                                </th>
                             </tr>
                         @endforeach
                     </tbody>
-                </div>
+                </table>
             </div>
             {{-- @endforeach --}}
         </div>
