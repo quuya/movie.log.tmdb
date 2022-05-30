@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\movie;
+use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\MovieRequest;
 
 class MovieController extends Controller
 {
@@ -14,8 +16,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = movie::all();
-        return view('movie',['movies'=>$movies]);
+        $movies = Movie::all();
+        return view('movie.index',['movies'=>$movies]);
     }
 
     /**
@@ -25,8 +27,9 @@ class MovieController extends Controller
      */
     public function create()
     {
+        $movies = Movie::all();
         // ここでapiでmovieInfoを取ってきたい
-        return view('movie.create');
+        return view('movie.create',['movies'=>$movies]);
     }
 
     /**
@@ -35,10 +38,10 @@ class MovieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MovieRequest $request)
     {
         $id = Auth::id();
-        $movieInfo = new movie;
+        $movieInfo = new Movie;
         $movieInfo->user_id = $id;
         $movieInfo->movie_title = $request->movie_title;
         $movieInfo->main_character = $request->main_character;
@@ -47,31 +50,33 @@ class MovieController extends Controller
         $movieInfo->impression = $request->impression;
         $movieInfo->talk_point = $request->talk_point;
         $movieInfo->save();
-        return redirect('movie.show');
+        return redirect('movie');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\movie  $movie
+     * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function show(movie $movie,$id)
+    public function show(Movie $movie,$id)
     {
-        $selectedMovieInfo = movie::where('id',$id)->first();
-        return view('movie.show',['selectedMovieInfo'=>$selectedMovieInfo]);
+        $movies = Movie::all();
+        $selectedMovieInfo = Movie::where('id',$id)->first();
+        return view('movie.show',['selectedMovieInfo'=>$selectedMovieInfo,'movies'=>$movies]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\movie  $movie
+     * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $selectedMovieInfo = movie::findOrFail($id);
-        return view('movie.edit',['selectedMovieInfo'=>$selectedMovieInfo]);
+        $movies = Movie::all();
+        $selectedMovieInfo = Movie::findOrFail($id);
+        return view('movie.edit',['selectedMovieInfo'=>$selectedMovieInfo,'movies'=>$movies]);
     }
 
     /**
@@ -81,9 +86,9 @@ class MovieController extends Controller
      * @param  \App\Models\movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, movie $movie)
+    public function update(Request $request, Movie $movie)
     {
-        $movie = movie::findOrFail($id);
+        $movie = Movie::findOrFail($id);
         $movie->story = $request->story;
         $movie->impression = $request->impression;
         $movie->talk_point = $request->talk_point;
@@ -97,9 +102,9 @@ class MovieController extends Controller
      * @param  \App\Models\movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(movie $movie,$id)
+    public function destroy(Movie $movie,$id)
     {
-        movie::fidOrFail($id)->delete();
+        Movie::fidOrFail($id)->delete();
         return redirect('movie');
     }
 }
