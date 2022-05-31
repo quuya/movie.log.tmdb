@@ -59,8 +59,8 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
                             @auth
-                            <a href="movie" class="btn btn-outline-primary"> TOP </a>
-                            <a href="movie/create" class="btn btn-outline-primary">Recode data</a>
+                            <a href="/movie" class="btn btn-outline-primary"> TOP </a>
+                            <a href="/movie/create" class="btn btn-outline-primary">Recode data</a>
                             @endauth
                         </ul>
 

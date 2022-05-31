@@ -19,10 +19,22 @@
                         @foreach ($movies as $movie)
                             <tr>
                                 <th>{{$movie->movie_title}}</th>
-                                <th>{{$movie->main_character}}</th>
+                                <th>{{$movie->main_character}}<br>
+                                    @if($movie->sub_character)
+                                    {{$movie->sub_character}}
+                                    @endif</th>
                                 <th><form action="/movie/show/{{$movie->id}}" method='get'>
-                                    @csrf
-                                    <input type="submit" value="more"></form>
+                                        @csrf
+                                        <input type="submit" value="詳細">
+                                    </form>
+                                    <form action="/movie/edit/{{$movie->id}}" method='get'>
+                                        @csrf
+                                        <input type="submit" value="編集">
+                                    </form>
+                                    <form action="/movie/delete/{{$movie->id}}" method='post'>
+                                        @csrf
+                                        <input type="submit" value="削除">
+                                    </form>
                                 </th>
                             </tr>
                         @endforeach
@@ -32,9 +44,10 @@
             {{-- @endforeach --}}
         </div>
         <div class="col-8">
-            <div class="col-10 col-md-8 offset-1 offset-md 2">
+            <div class="col-12 col-md-8 offset-1 offset-md 2">
                 <div class="card">
-                    映画の記録アプリ
+                    <h1>映画の記録アプリ</h1>
+
                 </div>
             </div>
         </div>

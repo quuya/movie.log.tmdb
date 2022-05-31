@@ -88,11 +88,11 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        $movie = Movie::findOrFail($id);
-        $movie->story = $request->story;
-        $movie->impression = $request->impression;
-        $movie->talk_point = $request->talk_point;
-        $movie->save();
+        $editedMovieInfo = Movie::findOrFail($id);
+        $editedMovieInfo->impression = $request->impression;
+        $editedMovieInfo->story = $request->story;
+        $editedMovieInfo->talk_point = $request->talk_point;
+        $editedMovieInfo->save();
         return redirect('movie.show');
     }
 
@@ -102,9 +102,9 @@ class MovieController extends Controller
      * @param  \App\Models\movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie,$id)
+    public function delete(Movie $movie,$id)
     {
-        Movie::fidOrFail($id)->delete();
+        Movie::findOrFail($id)->delete();
         return redirect('movie');
     }
 }
