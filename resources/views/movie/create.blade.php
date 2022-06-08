@@ -47,22 +47,22 @@
                 <form action='/movie/create' method='post'>
                 @csrf
                 <div class="card">
-                    <h3>タイトル</h3>
-                    <input name='movie_title' >
-                    <h3>主演</h3>
+                    <h2>タイトル</h2>
+                    <input name='movie_title' value='{{$movieDefaultInfo->title}}'>
+                    <h2>主演</h2>
                     <input name='main_character' >
-                    <h3>助演</h3>
+                    <h2>助演</h2>
                     <input name='sub_character'>
-                    <h3>あらすじ</h3>
+                    <h2>あらすじ</h2>
                     <textarea name='story' cols='60' rows='6'></textarea>
-                    <h3>感想</h3>
+                    <h2>感想</h2>
                     <textarea name='impression' cols='60' rows='6'></textarea>
-                    <h3>友達に話したいこと</h3>
+                    <h2>友達に話したいこと</h2>
                     <textarea name='talk_point' cols='60' rows='6'></textarea>
                     <input type='submit' value='記録する'>
                 </div>
             </div>
         </div>
-    </div>
+    </div2ß
 </div>
 @endsection
