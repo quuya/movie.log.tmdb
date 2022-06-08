@@ -45,9 +45,14 @@
         </div>
         <div class="col-8">
             <div class="col-12 col-md-8 offset-1 offset-md 2">
-                <div class="card">
-                    <h1>映画の記録アプリ</h1>
-
+                <div class="card" >
+                    <div class="card-body" style="margin:10px;">
+                        <h1>映画の記録アプリ</h1>
+                        <form action="/movie/create" method="get">
+                            <input name="title" placeholder="映画のタイトル">
+                            <input type="submit" value="検索">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

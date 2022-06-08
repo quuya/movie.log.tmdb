@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
@@ -14,9 +15,10 @@ class MovieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $movies = Movie::all();
+        $searchMovieTitle = $request->title;
         return view('movie.index',['movies'=>$movies]);
     }
 
@@ -25,11 +27,16 @@ class MovieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $movies = Movie::all();
+
         // ここでapiでmovieInfoを取ってきたい
-        return view('movie.create',['movies'=>$movies]);
+        $movie_title = $request->title;
+        $movieDefaultInfo = Http::get('https://api.themoviedb.org/3/search/movie?api_key=9509519374a4c7f4f07a6e58e1a7ec68&language=ja-JA&query='.$movie_title.'&page=1&include_adult=false&offset=0');
+        $movieDefaultInfo = mb_convert_encoding($movieDefaultInfo,"UTF-8");
+        $movieDefaultInfo = $movieDefaultInfo["results"][0];
+        return view('movie.create',['movies'=>$movies,'movieDefaultInfo'=>$movieDefaultInfo]);
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +33,9 @@ Route::post('movie/delete/{id}',[MovieController::class,'delete']);
 Route::get('movie/show/{id}',[MovieController::class,'show']);
 
 
-
-
-
-
+// Route::get('/posts',[ClientController::class,'getAllPost'])->name('posts.getallpost');
+Route::get('/posts/{id}',[ClientController::class,'getPostById'])->name('posts.getpostbyid');
+Route::get('/posts',[ClientController::class,'getMovieInfo'])->name('posts.getmovieinfo');
 
 
 
